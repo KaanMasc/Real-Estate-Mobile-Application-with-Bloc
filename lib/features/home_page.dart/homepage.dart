@@ -4,8 +4,6 @@ import 'package:api/features/home_page.dart/widgets/atomic/animated_search_bar.d
 import 'package:api/product/utility/paddings.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/general/custom_page_indicator.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 

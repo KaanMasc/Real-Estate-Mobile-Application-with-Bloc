@@ -29,36 +29,33 @@ class _StepThreeFormState extends State<StepThreeForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-             PostQuestionBox(
-              text: "Please fill in the property details.",
-            ),
-            _buildTextField(
-                'Price', _priceController, TextInputType.number, 'Enter price'),
-            _buildTextField(
-                'Sqft', _sqftconttroller, TextInputType.number, 'Enter Sgft '),
-            const SizedBox(height: 20),
-            _buildDropdownButton(
-                'Balcony Count',
-                List.generate(10, (index) => (index).toString()),
-                (value) => _balconyCount = value),
-            _buildDropdownButton(
-                'Bathroom Count',
-                List.generate(10, (index) => (index).toString()),
-                (value) => _bathroomCount = value),
-            _buildDropdownButton(
-                'Bedroom Count',
-                List.generate(10, (index) => (index).toString()),
-                (value) => _bedroomCount = value),
-            _buildYearDropdownButton(),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PostQuestionBox(
+            text: "Please fill in the property details.",
+          ),
+          _buildTextField(
+              'Price', _priceController, TextInputType.number, 'Enter price'),
+          _buildTextField(
+              'Sqft', _sqftconttroller, TextInputType.number, 'Enter Sgft '),
+          const SizedBox(height: 20),
+          _buildDropdownButton(
+              'Balcony Count',
+              List.generate(10, (index) => (index).toString()),
+              (value) => _balconyCount = value),
+          _buildDropdownButton(
+              'Bathroom Count',
+              List.generate(10, (index) => (index).toString()),
+              (value) => _bathroomCount = value),
+          _buildDropdownButton(
+              'Bedroom Count',
+              List.generate(10, (index) => (index).toString()),
+              (value) => _bedroomCount = value),
+          _buildYearDropdownButton(),
+        ],
       ),
     );
   }

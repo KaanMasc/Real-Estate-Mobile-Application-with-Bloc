@@ -4,7 +4,8 @@ class StepThreePersonalInformation extends StatefulWidget {
   const StepThreePersonalInformation({Key? key}) : super(key: key);
 
   @override
-  State<StepThreePersonalInformation> createState() => _PersonalDetailsFormState();
+  State<StepThreePersonalInformation> createState() =>
+      _PersonalDetailsFormState();
 }
 
 class _PersonalDetailsFormState extends State<StepThreePersonalInformation> {
@@ -14,36 +15,33 @@ class _PersonalDetailsFormState extends State<StepThreePersonalInformation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Personal Details')),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-           
-            _buildDropdownButton(
-              'Gender',
-              ['Male', 'Female', 'Other'],
-              (value) => _selectedGender = value,
-            ),
-            _buildDropdownButton(
-              'Age',
-              ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
-              (value) => _selectedAge = value,
-            ),
-            _buildDropdownButton(
-              'Employment Status',
-              ['Employed', 'Unemployed', 'Self-Employed', 'Student', 'Retired'],
-              (value) => _selectedEmploymentStatus = value,
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildDropdownButton(
+            'Gender',
+            ['Male', 'Female', 'Other'],
+            (value) => _selectedGender = value,
+          ),
+          _buildDropdownButton(
+            'Age',
+            ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
+            (value) => _selectedAge = value,
+          ),
+          _buildDropdownButton(
+            'Employment Status',
+            ['Employed', 'Unemployed', 'Self-Employed', 'Student', 'Retired'],
+            (value) => _selectedEmploymentStatus = value,
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildDropdownButton(String label, List<String> options, Function(String) onChanged) {
+  Widget _buildDropdownButton(
+      String label, List<String> options, Function(String) onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -65,7 +63,11 @@ class _PersonalDetailsFormState extends State<StepThreePersonalInformation> {
               onChanged(value!);
             });
           },
-          value: label == 'Gender' ? _selectedGender : label == 'Age' ? _selectedAge : _selectedEmploymentStatus,
+          value: label == 'Gender'
+              ? _selectedGender
+              : label == 'Age'
+                  ? _selectedAge
+                  : _selectedEmploymentStatus,
         ),
         const SizedBox(height: 20),
       ],

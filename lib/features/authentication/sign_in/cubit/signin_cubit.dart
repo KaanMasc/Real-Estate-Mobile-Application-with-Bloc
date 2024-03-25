@@ -3,7 +3,6 @@ import 'package:api/features/main_page/main_page.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/auth_exception_handler.dart';
 part 'signin_state.dart';

@@ -7,19 +7,24 @@ class StepOneForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Column(
-        children: [
-          PostQuestionBox(
-              text: "Please select the type of ad you want to publish."),
-          SizedBox(height: 25),
-          PostAdButton(text: 'I want to sell  my property.(categoryID : 1)', categoryId: "1",),
-          PostAdButton(text: 'I want to rent out my property.(categoryID : 2)',categoryId: "2"),
-          PostAdButton(text: 'I want to rent out my room.(categoryID : 3)',categoryId: "3"),
-          PostAdButton(text: 'I am looking for room.(categoryID : 5)',categoryId: "5"),
-        ],
-      ),
+    return const Column(
+      children: [
+        PostQuestionBox(
+            text: "Please select the type of ad you want to publish."),
+        SizedBox(height: 25),
+        PostAdButton(
+          text: 'I want to sell  my property.(categoryID : 1)',
+          categoryId: "1",
+        ),
+        PostAdButton(
+            text: 'I want to rent out my property.(categoryID : 2)',
+            categoryId: "2"),
+        PostAdButton(
+            text: 'I want to rent out my room.(categoryID : 3)',
+            categoryId: "3"),
+        PostAdButton(
+            text: 'I am looking for room.(categoryID : 5)', categoryId: "5"),
+      ],
     );
   }
 }

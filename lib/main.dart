@@ -1,4 +1,5 @@
 import 'package:api/features/authentication/register/cubit/register_cubit.dart';
+import 'package:api/features/authentication/register/register_page.dart';
 import 'package:api/features/authentication/sign_in/cubit/signin_cubit.dart';
 import 'package:api/features/main_page/main_page.dart';
 import 'package:api/features/post_ad_page/bloc/ad_bloc.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<AdBloc>(create: (BuildContext context) => AdBloc()),
         ],
-        child: MainPage(),
+        child: RegisterPage(),
       ),
       theme: ThemeData.light(
         useMaterial3: true,
