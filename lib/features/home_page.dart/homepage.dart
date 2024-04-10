@@ -1,3 +1,5 @@
+import 'package:api/features/home_page.dart/widgets/general/available_room_card.dart';
+import 'package:api/features/home_page.dart/widgets/general/custom_page_indicator.dart';
 import 'package:api/features/home_page.dart/widgets/general/filtered_ad_menu_section.dart';
 import 'package:api/features/home_page.dart/widgets/general/preview_card_deck.dart';
 import 'package:api/features/home_page.dart/widgets/atomic/animated_search_bar.dart';
@@ -16,15 +18,21 @@ class HomePage extends StatelessWidget {
         Padding(
           padding: ProjectPaddings.pagepadding,
           child: SafeArea(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                const AnimatedSearchBar(),
-                const SizedBox(height: 30),
-                FilteredMenuSection(),
-                const SizedBox(height: 30),
-                const PreviewCardDeck()
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  const AnimatedSearchBar(),
+                  const SizedBox(height: 30),
+                  FilteredMenuSection(),
+                  const SizedBox(height: 30),
+                  PreviewCardDeck(),
+                  const SizedBox(height: 20),
+                  const FilteredIndicator(),
+                  const SizedBox(height: 20),
+                  const AvailableRoomCard()
+                ],
+              ),
             ),
           ),
         ),
@@ -39,8 +47,7 @@ class _Backgorundimagewithfilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter:
-          ColorFilter.mode(Colors.white.withOpacity(0.3), BlendMode.srcOver),
+      colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.3), BlendMode.srcOver),
       child: Container(
         height: double.infinity,
         width: double.infinity,

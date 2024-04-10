@@ -9,3 +9,4 @@ class AppSizes {
     screenWidth = MediaQuery.of(context).size.width;
   }
 }
+ 

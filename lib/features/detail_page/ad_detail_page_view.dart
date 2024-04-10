@@ -4,6 +4,7 @@ import 'package:api/features/home_page.dart/widgets/atomic/direct_to_detailpage_
 import 'package:api/features/detail_page/widgets/atomic/location_information_cards.dart';
 import 'package:api/features/detail_page/widgets/atomic/property_owner_card.dart';
 import 'package:api/product/enums/colors.dart';
+import 'package:api/product/model/new_listing_model.dart';
 import 'package:api/product/utility/app_sizes.dart';
 import 'package:api/product/utility/paddings.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class AdDetailPage extends StatelessWidget {
   }) : super(key: key);
 
   final String label = 'Book Now';
-  final AdPropertyModel adPropertyModel;
+  final NewListingModel adPropertyModel;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class AdDetailPage extends StatelessWidget {
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(adPropertyModel.adDescription?.title ?? ''),
-              background: buildImagePageView(adPropertyModel),
+              background: _buildImagePageView(adPropertyModel),
             ),
           ),
           SliverList(
@@ -41,8 +42,7 @@ class AdDetailPage extends StatelessWidget {
                   padding: ProjectPaddings.pagepadding,
                   child: Column(
                     children: [
-                      Text('ABOUT',
-                          style: Theme.of(context).textTheme.titleLarge),
+                      Text('ABOUT', style: Theme.of(context).textTheme.titleLarge),
                       const SizedBox(height: 20),
                       PropertyInformationListView(property: adPropertyModel),
                       const SizedBox(height: 20),
@@ -80,22 +80,21 @@ class AdDetailPage extends StatelessWidget {
     );
   }
 
-  PageView buildImagePageView(AdPropertyModel adPropertyModel) {
+  PageView _buildImagePageView(NewListingModel newListingModel) {
     return PageView.builder(
-      itemCount: adPropertyModel.images?.length ?? 0,
+      itemCount: newListingModel.images.length,
       itemBuilder: (context, index) {
-        final imageUrl = adPropertyModel.images?[index];
-        return buildImage(imageUrl ?? '');
+        final imageUrl = newListingModel.images[index];
+        return _buildImage(imageUrl);
       },
     );
   }
 
-  Container buildImage(String imagePath) {
+  Container _buildImage(String imagePath) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          image: DecorationImage(
-              image: NetworkImage(imagePath), fit: BoxFit.cover)),
+          image: DecorationImage(image: NetworkImage(imagePath), fit: BoxFit.cover)),
     );
   }
 }

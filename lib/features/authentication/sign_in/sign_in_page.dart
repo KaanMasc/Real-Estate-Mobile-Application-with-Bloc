@@ -5,7 +5,6 @@ import 'package:api/features/authentication/widgets/custom_email_field.dart';
 import 'package:api/features/authentication/widgets/custom_password_field.dart';
 import 'package:api/features/authentication/widgets/real_estate_logo.dart';
 import 'package:api/features/authentication/widgets/terms_and_privacy_policy.dart';
-import 'package:api/product/utility/paddings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:api/features/authentication/sign_in/cubit/signin_cubit.dart';
@@ -59,59 +58,55 @@ class SignInForm extends StatelessWidget {
       child: BlocConsumer<SignInCubit, SignInStates>(
         listener: (BuildContext context, state) {
           if (state is SignInSuccesState) {
-        
             state.navigate(context);
           } else if (state is SignInErrorState) {
-            showToast(state.errorMessage);
+            ToastMesage.showToast(state.errorMessage);
           }
         },
         builder: (BuildContext context, Object? state) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Padding(
-              padding: ProjectPaddings.pagepadding,
-              child: Stack(
-                children: [
-                  const BackgroundFiltered(),
-                  Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Spacer(),
-                        const RealEstateWelcome(),
-                        const SizedBox(height: 20),
-                        CustomEmailField(controller: emailController),
-                        const SizedBox(height: 20),
-                        CustomPasswordField(controller: passwordController),
-                        TextButton(
-                          child: const Text('Forgot your Password?'),
-                          onPressed: () {},
-                        ),
-                        const SizedBox(height: 20),
-                        CustomSignInButton(
-                            formKey: formKey,
-                            emailController: emailController,
-                            passwordController: passwordController),
-                        const Spacer(),
-                        AuthOptionText(
-                          primaryText: 'Don\'t have an account? ',
-                          actionText: 'Create One',
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()));
-                          },
-                        ),
-                        const TermsAndPolicyText(),
-                        SizedBox(height: 12),
-                      ],
-                    ),
+            body: Stack(
+              children: [
+                const BackgroundFiltered(),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Spacer(),
+                      const RealEstateWelcome(),
+                      const SizedBox(height: 20),
+                      CustomEmailField(controller: emailController),
+                      const SizedBox(height: 20),
+                      CustomPasswordField(controller: passwordController),
+                      TextButton(
+                        child: const Text('Forgot your Password?'),
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 20),
+                      CustomSignInButton(
+                          formKey: formKey,
+                          emailController: emailController,
+                          passwordController: passwordController),
+                      const Spacer(),
+                      AuthOptionText(
+                        primaryText: 'Don\'t have an account? ',
+                        actionText: 'Create One',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()));
+                        },
+                      ),
+                      const TermsAndPolicyText(),
+                      const SizedBox(height: 12),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

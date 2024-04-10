@@ -3,13 +3,13 @@ import 'package:api/product/enums/colors.dart';
 import 'package:api/product/utility/paddings.dart';
 import 'package:flutter/material.dart';
 
-
 class ServicesButton extends StatelessWidget {
   const ServicesButton({
     Key? key,
-    required this.title,
+    required this.title, required this.onTap,
   }) : super(key: key);
   final String title;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,19 +22,20 @@ class ServicesButton extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 3 / 9,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              gradient: LinearGradient(colors: [
-                ProjectColors.mortarGrey.color,
-                ProjectColors.spanishGrey.color
-              ]),
+              gradient: LinearGradient(
+                  colors: [ProjectColors.mortarGrey.color, ProjectColors.spanishGrey.color]),
             ),
-            child: Center(
-                child: Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: ProjectColors.white.color),
-            )),
+            child: GestureDetector(
+              onTap: onTap,
+              child: Center(
+                  child: Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: ProjectColors.white.color),
+              )),
+            ),
           ),
         ),
       ],

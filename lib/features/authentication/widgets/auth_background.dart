@@ -10,30 +10,12 @@ class BackgroundFiltered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Align(
-          alignment: const AlignmentDirectional(-8, -10),
-          child: Container(
-            height: AppSizes.screenHeight / 1.1,
-            width: AppSizes.screenWidth / 1.1,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ProjectColors.orange.color),
-          ),
-        ),
-        Align(
-          child: Container(
-            height: AppSizes.screenHeight,
-            width: AppSizes.screenWidth,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ProjectColors.pagecolor.color),
-          ),
-        ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 60, sigmaY: 80),
-          child: Container(),
-        )
-      ],
+    return Container(
+      height: AppSizes.screenHeight,
+      width: AppSizes.screenWidth,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/ic_auth_backgorund.JPEG'), fit: BoxFit.fitHeight)),
     );
   }
 }

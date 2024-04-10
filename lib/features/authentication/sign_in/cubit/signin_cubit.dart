@@ -9,10 +9,8 @@ part 'signin_state.dart';
 
 final class SignInCubit extends BaseCubit<SignInStates> {
   SignInCubit() : super(SignInInitialState());
-
   static SignInCubit get(context) => BlocProvider.of(context);
   bool isLoading = false;
-
   Future<void> userLogin({
     required String email,
     required String password,

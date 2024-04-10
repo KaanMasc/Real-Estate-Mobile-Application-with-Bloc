@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SeachMessagesTextField extends StatelessWidget {
   const SeachMessagesTextField({super.key});
-
+  final String _text = 'Search';
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -10,10 +10,10 @@ class SeachMessagesTextField extends StatelessWidget {
       child: TextFormField(
         controller: TextEditingController(),
         keyboardType: TextInputType.text,
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            label: Text('Search'),
-            prefixIcon: Icon(Icons.search)),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+            label: Text(_text),
+            prefixIcon: const Icon(Icons.search)),
       ),
     );
   }

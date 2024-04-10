@@ -1,4 +1,5 @@
 import 'package:api/product/enums/colors.dart';
+import 'package:api/product/utility/app_sizes.dart';
 import 'package:flutter/material.dart';
 
 class MessagesPreviewCard extends StatelessWidget {
@@ -7,8 +8,8 @@ class MessagesPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 9,
-      width: MediaQuery.of(context).size.width,
+      height: AppSizes.screenHeight / 8,
+      width: AppSizes.screenWidth,
       decoration: BoxDecoration(
         color: ProjectColors.pagecolor.color,
         borderRadius: BorderRadius.circular(25),
@@ -20,8 +21,7 @@ class MessagesPreviewCard extends StatelessWidget {
               child: Center(
                   child: CircleAvatar(
                 radius: 40,
-                backgroundImage:
-                    AssetImage('assets/images/AI_dummy_profile_picture.png'),
+                backgroundImage: AssetImage('assets/images/AI_dummy_profile_picture.png'),
               ))),
           Flexible(
               flex: 5,
@@ -39,14 +39,14 @@ class MessagesPreviewCard extends StatelessWidget {
                               width: 400,
                               child: Text(
                                 'Fderico Engriuas',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                               )),
                           SizedBox(height: 5),
                           Text(
-                              'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,),
+                            'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
                           SizedBox(height: 5)
                         ],
                       )),
@@ -56,8 +56,7 @@ class MessagesPreviewCard extends StatelessWidget {
                         children: [
                           Text(
                             '22.24',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 20),

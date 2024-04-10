@@ -1,35 +1,37 @@
-import 'package:api/features/authentication/register/cubit/register_cubit.dart';
-import 'package:api/features/authentication/register/register_page.dart';
-import 'package:api/features/authentication/sign_in/cubit/signin_cubit.dart';
+import 'package:api/features/aPostAdPAge/bloc/post_ad_bloc.dart';
+import 'package:api/features/authentication/sign_in/sign_in_page.dart';
 import 'package:api/features/main_page/main_page.dart';
-import 'package:api/features/post_ad_page/bloc/ad_bloc.dart';
-import 'package:api/features/post_ad_page/post_steps/step_five_form.dart';
-
+import 'package:api/features/onboarding/on_boarding_view.dart';
+import 'package:api/features/aPostAdPAge/listing_provider.dart';
+import 'package:api/features/authentication/register/cubit/register_cubit.dart';
+import 'package:api/features/authentication/sign_in/cubit/signin_cubit.dart';
 import 'package:api/product/initialize/application_start.dart';
 import 'package:api/product/utility/app_sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   await ApplicationStart.init();
-  const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  );
+  final prefs = await SharedPreferences.getInstance();
+  final isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
   runApp(
-    const MyApp(),
+    MyApp(
+      isFirstTime: isFirstTime,
+    ),
   );
 }
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key, required this.isFirstTime});
+  final bool isFirstTime;
   @override
   Widget build(BuildContext context) {
     AppSizes.init(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MultiBlocProvider(
+    return ChangeNotifierProvider<ListingProvider>(
+      create: (_) => ListingProvider(),
+      child: MultiBlocProvider(
         providers: [
           BlocProvider<RegisterCubit>(
             create: (BuildContext context) => RegisterCubit(),
@@ -37,19 +39,15 @@ class MyApp extends StatelessWidget {
           BlocProvider<SignInCubit>(
             create: (BuildContext context) => SignInCubit(),
           ),
-          BlocProvider<AdBloc>(create: (BuildContext context) => AdBloc()),
-        ],
-        child: RegisterPage(),
-      ),
-      theme: ThemeData.light(
-        useMaterial3: true,
-      ).copyWith(
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
+          BlocProvider<PostAdBloc>(
+            create: (BuildContext context) => PostAdBloc(context.read<ListingProvider>()),
           ),
-          outlinedButtonTheme: const OutlinedButtonThemeData()),
+        ],
+        child: MaterialApp(
+          home: isFirstTime ? const OnBoardingView() : const SignInPage(),
+          theme: ThemeData(useMaterial3: true),
+        ),
+      ),
     );
   }
 }

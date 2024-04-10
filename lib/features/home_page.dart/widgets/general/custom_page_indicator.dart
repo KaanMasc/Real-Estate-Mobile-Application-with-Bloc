@@ -1,17 +1,17 @@
-
-import 'package:api/product/enums/colors.dart';
-import 'package:api/product/utility/paddings.dart';
 import 'package:flutter/material.dart';
 
-class CustomPageIndicator extends StatelessWidget {
-  final Function(String) onTabChanged;
-  final String selectedOption;
+import '../../../../product/enums/colors.dart';
+import '../../../../product/utility/paddings.dart';
 
-  const CustomPageIndicator({
-    super.key,
-    required this.onTabChanged,
-    required this.selectedOption,
-  });
+class FilteredIndicator extends StatefulWidget {
+  const FilteredIndicator({super.key});
+
+  @override
+  State<FilteredIndicator> createState() => _FilteredIndicatorState();
+}
+
+class _FilteredIndicatorState extends State<FilteredIndicator> {
+  late String _selectedOption = 'New';
 
   @override
   Widget build(BuildContext context) {
@@ -21,27 +21,35 @@ class CustomPageIndicator extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          buildTab('New', context, selectedOption == 'New'),
-          buildTab('Nearby', context, selectedOption == 'Nearby'),
-          buildTab('Popular', context, selectedOption == 'Popular'),
+          _buildTab('New', context),
+          _buildTab('Nearby', context),
+          _buildTab('Popular', context),
         ],
       ),
     );
   }
 
-  Widget buildTab(String option, BuildContext context, bool isSelected) {
+  Widget _buildTab(String option, BuildContext context) {
+    final isSelected = option == _selectedOption;
+
     return Padding(
       padding: ProjectPaddings.horizontalLarge,
       child: GestureDetector(
-        onTap: () => onTabChanged(option),
+        onTap: () {
+          setState(() {
+            _selectedOption = option; // Seçilen seçeneği güncelle
+          });
+        },
         child: Stack(
           alignment: Alignment.center,
           children: [
             Text(
               option,
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: isSelected ? ProjectColors.orange.color : ProjectColors.spanishGrey.color
-              )
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    color: isSelected
+                        ? ProjectColors.orange.color
+                        : ProjectColors.spanishGrey.color,
+                  ),
             ),
             if (isSelected)
               Positioned(

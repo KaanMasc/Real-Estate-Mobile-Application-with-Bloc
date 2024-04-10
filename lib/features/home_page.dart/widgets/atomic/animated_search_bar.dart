@@ -19,16 +19,13 @@ class _ProjectSearchSectionState extends State<AnimatedSearchBar>
           begin: MediaQuery.of(context).size.height / 10,
           end: MediaQuery.of(context).size.height * 4 / 10)
       .animate(CurvedAnimation(
-          parent: _controller,
-          curve: Interval(0.0, 1.0, curve: Curves.ease)));
-          
+          parent: _controller, curve: Interval(0.0, 1.0, curve: Curves.ease)));
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
- 
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +44,18 @@ class _ProjectSearchSectionState extends State<AnimatedSearchBar>
               const SizedBox(
                 width: 8,
               ),
-       _buildTextSection(),
+              _buildTextSection(),
             ],
           ),
           GestureDetector(
             onTap: () {
-             _toggleSelection(); // isSelected durumunu değiştir
-    if (isSelected) {
-      _controller.forward(); // isSelected true ise animasyonu başlat
-    } else {
-      _controller.reverse(); // isSelected false ise animasyonu ters yönde çalıştır
-    }
+              _toggleSelection(); // isSelected durumunu değiştir
+              if (isSelected) {
+                _controller.forward(); // isSelected true ise animasyonu başlat
+              } else {
+                _controller
+                    .reverse(); // isSelected false ise animasyonu ters yönde çalıştır
+              }
             },
             child: AnimatedBuilder(
                 animation: _controller,
@@ -93,7 +91,6 @@ class _ProjectSearchSectionState extends State<AnimatedSearchBar>
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
       height: MediaQuery.of(context).size.height / 10,
-
       child: isSelected == false
           ? const Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

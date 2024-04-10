@@ -1,10 +1,10 @@
 import 'package:api/features/home_page.dart/widgets/atomic/preview_card_stack.dart';
+import 'package:api/product/model/new_listing_model.dart';
+import 'package:api/product/services/property_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:card_swiper/card_swiper.dart';
-
 import '../../../detail_page/ad_detail_page_view.dart';
-import '../../../../product/model/ad_property_model.dart';
 
 class PreviewCardDeck extends StatefulWidget {
   const PreviewCardDeck({Key? key}) : super(key: key);
@@ -14,27 +14,22 @@ class PreviewCardDeck extends StatefulWidget {
 }
 
 class _PreviewCardDeckState extends State<PreviewCardDeck> {
-  late Stream<List<AdPropertyModel>> _propertyAdsStream;
+  final IPropertyAdRepository _propertyAdService = PropertyAdRepository();
+
+  late Future<List<dynamic>> _propertyAdsStream;
 
   @override
   void initState() {
     super.initState();
-    _propertyAdsStream = fetchPropertyAds();
-  }
-
-  Stream<List<AdPropertyModel>> fetchPropertyAds() {
-    return FirebaseFirestore.instance.collection('propertyAd').snapshots().map(
-        (snapshot) => snapshot.docs
-            .map((doc) => AdPropertyModel.fromJson(doc.data()))
-            .toList());
+    _propertyAdsStream = _propertyAdService.fetchProperties(1);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        StreamBuilder<List<AdPropertyModel>>(
-          stream: _propertyAdsStream,
+        FutureBuilder<List<dynamic>>(
+          future: _propertyAdsStream,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator.adaptive();
@@ -51,14 +46,13 @@ class _PreviewCardDeckState extends State<PreviewCardDeck> {
               itemBuilder: (BuildContext context, int index) {
                 final propertyAd = propertyAds[index];
                 return PropertyAdCard(
-                  adtitle: propertyAd.adDescription?.title ?? '',
-                  imagePath: propertyAd.images![0],
+                  adtitle: propertyAd.adDescription.title,
+                  imagePath: propertyAd.images[0],
                   onpressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            AdDetailPage(adPropertyModel: propertyAd),
+                        builder: (context) => AdDetailPage(adPropertyModel: propertyAd),
                       ),
                     );
                   },

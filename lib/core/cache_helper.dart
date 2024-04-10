@@ -1,29 +1,34 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CacheHelper {
-  static late SharedPreferences sharedPreferences;
+class SharedPreferencesHelper {
+  static const String UID_KEY = 'uid';
+  static const String TOKEN_KEY = 'token';
 
-  static init() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+  // Kullanıcı bilgilerini SharedPreferences'e kaydeden generic metot
+  static Future<void> saveUserInfo<T>(String key, T value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (value is String) {
+      await prefs.setString(key, value as String);
+    } else if (value is int) {
+      await prefs.setInt(key, value as int);
+    } else if (value is double) {
+      await prefs.setDouble(key, value as double);
+    } else if (value is bool) {
+      await prefs.setBool(key, value as bool);
+    }
   }
 
-  static Future<bool> saveData({
-    required String key,
-    required dynamic value,
-  }) async {
-    if (value is String) return await sharedPreferences.setString(key, value);
-    if (value is int) return await sharedPreferences.setInt(key, value);
-    if (value is double) return await sharedPreferences.setDouble(key, value);
-    return await sharedPreferences.setBool(key, value);
+  // Kullanıcı bilgilerini SharedPreferences'den alan generic metot
+  static Future<T?> getUserInfo<T>(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.get(key) as T?;
   }
 
-  static dynamic getData({
-    required String key,
-  }) {
-    return sharedPreferences.get(key);
-  }
-
-  static Future<bool> removeData(String key) async {
-    return await sharedPreferences.remove(key);
+  // Kullanıcı çıkış yaptığında SharedPreferences'ten UID ve token'ı silen metot
+  static Future<void> removeUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(UID_KEY);
+    prefs.remove(TOKEN_KEY);
   }
 }

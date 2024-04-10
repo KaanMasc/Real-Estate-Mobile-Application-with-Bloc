@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-import 'package:api/product/enums/colors.dart';
+import 'package:api/product/utility/app_sizes.dart';
 import 'package:flutter/material.dart';
+import '../../../product/utility/paddings.dart';
 
 class ProfileSection extends StatelessWidget {
   const ProfileSection({
@@ -14,23 +13,21 @@ class ProfileSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 70,
-      width: 400,
-      decoration: BoxDecoration(
-          color: ProjectColors.pagecolor.color,
-          borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(width: 100, child: Text(text)),
-          const SizedBox(
-            width: 200,
+    return SizedBox(
+      height: AppSizes.screenHeight / 12,
+      width: AppSizes.screenWidth,
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: ProjectPaddings.horizontalMedium,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(text),
+              IconButton(onPressed: onpressed, icon: const Icon(Icons.chevron_right_rounded))
+            ],
           ),
-          IconButton(
-              onPressed: onpressed,
-              icon: const Icon(Icons.chevron_right_rounded))
-        ],
+        ),
       ),
     );
   }

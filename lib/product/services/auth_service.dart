@@ -18,6 +18,7 @@ abstract class IAuthenticationService {
 class AuthenticationService extends IAuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final userCollection = FirebaseFirestore.instance.collection("users");
+
   @override
   Future<void> signUp(BuildContext context,
       {required String name,

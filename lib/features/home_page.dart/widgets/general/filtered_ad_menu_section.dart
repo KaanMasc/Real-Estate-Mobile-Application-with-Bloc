@@ -1,14 +1,16 @@
-import 'package:api/features/home_page.dart/widgets/atomic/services_buton.dart';
 import 'package:flutter/material.dart';
+import 'package:api/features/all_ads/all_property_ad_page.dart';
+import 'package:api/product/utility/navigate.dart';
+import 'package:api/features/home_page.dart/widgets/atomic/services_buton.dart';
 
 class FilteredMenuSection extends StatelessWidget {
-  FilteredMenuSection({super.key});
+  FilteredMenuSection({Key? key}) : super(key: key);
+
   final List<String> _servicesList = [
-    'All Rooms',
-    'All Roommates',
-    'All Builders',
-    'All Listing',
-    'All Sellers',
+    'Houses for Sale',
+    'Houses for Rent',
+    'Room for Rent',
+    'Find Roommate',
   ];
 
   @override
@@ -21,7 +23,16 @@ class FilteredMenuSection extends StatelessWidget {
         itemCount: _servicesList.length,
         itemBuilder: (context, index) {
           final title = _servicesList[index];
-          return ServicesButton(title: title);
+          return ServicesButton(
+            title: title,
+            onTap: () {
+              navigateTo(
+                context,
+                AllPropertyAdsPage(
+                    type:index +1), // Kategori ID'sini AllPropertyAdsPage'e iletiyoruz
+              );
+            },
+          );
         },
       ),
     );

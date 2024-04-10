@@ -1,21 +1,22 @@
 import 'package:api/product/enums/colors.dart';
+import 'package:api/product/utility/app_sizes.dart';
 import 'package:flutter/material.dart';
 
 class ProfileButton extends StatelessWidget {
-  const ProfileButton({super.key});
-
+  const ProfileButton({super.key, required this.onPressed});
+  final VoidCallback onPressed;
+  final String _title = 'Add Location';
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 200,
-        height: 50,
+      height: AppSizes.screenHeight/20,
+        width: AppSizes.screenWidth/2,
+        
         decoration: BoxDecoration(
-            color: ProjectColors.orange.color,
-            borderRadius: BorderRadius.circular(25)),
+            color: ProjectColors.orange.color, borderRadius: BorderRadius.circular(25)),
         child: TextButton(
-          onPressed: () {},
-          child: Text('Add Location',
-              style: Theme.of(context).textTheme.bodyMedium),
+          onPressed: onPressed,
+          child: Text(_title, style: Theme.of(context).textTheme.bodyMedium),
         ));
   }
 }

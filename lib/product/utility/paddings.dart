@@ -13,7 +13,7 @@ class ProjectPaddings {
       EdgeInsets.symmetric(horizontal: 8);
   static const EdgeInsets horizontalLarge =
       EdgeInsets.symmetric(horizontal: 12);
-  static const EdgeInsets pagepadding = EdgeInsets.symmetric(
-    horizontal: 12, vertical: 12
-  );
+  static const EdgeInsets pagepadding =
+      EdgeInsets.symmetric(horizontal: 12, vertical: 12);
+  static const EdgeInsets allSmall = EdgeInsets.all(4.0);
 }

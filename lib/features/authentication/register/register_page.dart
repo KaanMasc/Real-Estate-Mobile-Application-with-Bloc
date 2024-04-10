@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:api/features/authentication/register/cubit/register_cubit.dart';
 import 'package:api/features/authentication/sign_in/sign_in_page.dart';
 import 'package:api/features/authentication/widgets/auth_background.dart';
@@ -7,7 +6,7 @@ import 'package:api/features/authentication/widgets/custom_email_field.dart';
 import 'package:api/features/authentication/widgets/custom_password_field.dart';
 import 'package:api/features/authentication/widgets/real_estate_logo.dart';
 import 'package:api/features/authentication/widgets/register_button.dart';
-import 'package:api/product/utility/paddings.dart';
+import 'package:api/features/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/toast_message.dart';
@@ -76,21 +75,21 @@ class SignInForm extends StatelessWidget {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return RegisterCompleteAnimatoion();
+                return const RegisterCompleteAnimatoion();
               },
             );
 
-            Future.delayed(Duration(seconds: 3), () {
+            Future.delayed(const Duration(seconds: 3), () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => SignInPage()),
+                MaterialPageRoute(builder: (context) => const MainPage()),
               );
             });
           }
           if (state is RegisterErrorState) {
-            showToast(state.errorMessage);
+            ToastMesage.showToast(state.errorMessage);
           } else if (state is RegisterLoadingState) {
-            Center(
+            const Center(
               child: CircularProgressIndicator.adaptive(),
             );
           }
@@ -98,56 +97,49 @@ class SignInForm extends StatelessWidget {
         builder: (BuildContext context, Object? state) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Padding(
-              padding: ProjectPaddings.pagepadding,
-              child: Stack(
-                children: [
-                  const BackgroundFiltered(),
-                  Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Spacer(),
-                        const RealEstateWelcome(),
-                        const SizedBox(height: 20),
-                        CustomFullNameField(controller: fullNameController),
-                        const SizedBox(height: 20),
-                        CustomEmailField(controller: emailController),
-                        const SizedBox(height: 20),
-                        CustomPasswordField(controller: passwordController),
-                        const SizedBox(height: 20),
-                        CustomPasswordField(
-                            controller: passwordConfirmController),
-                        TextButton(
-                          child: const Text('Forgot your Password?'),
-                          onPressed: () {},
-                        ),
-                        const SizedBox(height: 20),
-                        RegisterButton(
-                          formKey: formKey,
-                          emailController: emailController,
-                          passwordController: passwordController,
-                          fullNameController: fullNameController,
-                          passwordConfirmController: passwordConfirmController,
-                        ),
-                        const Spacer(),
-                        AuthOptionText(
-                            primaryText: 'Already have an account ?',
-                            actionText: 'Login',
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignInPage()));
-                            })
-                      ],
-                    ),
+            body: Stack(
+              children: [
+                const BackgroundFiltered(),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Spacer(),
+                      const RealEstateWelcome(),
+                      const SizedBox(height: 20),
+                      CustomFullNameField(controller: fullNameController),
+                      const SizedBox(height: 20),
+                      CustomEmailField(controller: emailController),
+                      const SizedBox(height: 20),
+                      CustomPasswordField(controller: passwordController),
+                      const SizedBox(height: 20),
+                      CustomPasswordField(controller: passwordConfirmController),
+                      TextButton(
+                        child: const Text('Forgot your Password?'),
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 20),
+                      RegisterButton(
+                        formKey: formKey,
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        fullNameController: fullNameController,
+                        passwordConfirmController: passwordConfirmController,
+                      ),
+                      const Spacer(),
+                      AuthOptionText(
+                          primaryText: 'Already have an account ?',
+                          actionText: 'Login',
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => const SignInPage()));
+                          })
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

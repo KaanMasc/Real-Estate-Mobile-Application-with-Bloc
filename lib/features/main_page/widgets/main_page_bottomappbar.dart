@@ -5,18 +5,15 @@ import 'package:api/product/utility/strings.dart';
 import 'package:flutter/material.dart';
 
 class Mainpagebottomappbar extends StatelessWidget {
-  const Mainpagebottomappbar({
-    super.key,
-  });
+  const Mainpagebottomappbar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      
       notchMargin: 10.0,
       shape: const CircularNotchedRectangle(),
       child: TabBar(
-        splashBorderRadius: BorderRadius.zero ,
+          splashBorderRadius: BorderRadius.zero,
           labelColor: ProjectColors.black.color,
           unselectedLabelColor: ProjectColors.mortarGrey.color,
           indicatorColor: Colors.transparent,

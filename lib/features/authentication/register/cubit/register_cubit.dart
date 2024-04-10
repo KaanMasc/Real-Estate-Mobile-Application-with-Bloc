@@ -42,21 +42,16 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String fullName,
   }) {
     UserModel userModel = UserModel(
-      uId: uId,
+      uid: uId,
       email: email,
       fullName: fullName,
-      photoURL:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Q82WISxpWPp5dHBTWHypFOZbRTvc0ST0xQ&usqp=CAU',
+      photoURL: '',
       bio: 'Write your bio...',
     );
 
     emit(RegisterLoadingState());
 
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(uId)
-        .set(userModel.toMap())
-        .then((value) {
+    FirebaseFirestore.instance.collection('users').doc(uId).set(userModel.toMap()).then((value) {
       emit(RegisterSuccesState(
         uId,
       ));

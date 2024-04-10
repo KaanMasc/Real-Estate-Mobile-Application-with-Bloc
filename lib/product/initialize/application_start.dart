@@ -13,8 +13,10 @@ class ApplicationStart {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    FirebaseUIAuth.configureProviders(
-        [EmailAuthProvider(), ]);
-    AppCache.instance.setup();
+
+    FirebaseUIAuth.configureProviders([
+      EmailAuthProvider(),
+    ]);
+    AppCacheHelper.instance.setup();
   }
 }
