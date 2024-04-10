@@ -1,8 +1,6 @@
 import 'package:api/features/home_page.dart/widgets/atomic/preview_card_stack.dart';
-import 'package:api/product/model/new_listing_model.dart';
 import 'package:api/product/services/property_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:card_swiper/card_swiper.dart';
 import '../../../detail_page/ad_detail_page_view.dart';
 
