@@ -1,4 +1,5 @@
 import 'package:api/features/main_page/main_page.dart';
+import 'package:api/product/utility/app_sizes.dart';
 import 'package:api/product/utility/navigate.dart';
 import 'package:flutter/material.dart';
 import '../../core/toast_message.dart';
@@ -25,7 +26,11 @@ mixin StateHandler {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const CircularProgressIndicator();
+        return Center(
+            child: SizedBox(
+                height: AppSizes.screenHeight / 2,
+                width: AppSizes.screenHeight / 2,
+                child: const CircularProgressIndicator()));
       },
     );
   }

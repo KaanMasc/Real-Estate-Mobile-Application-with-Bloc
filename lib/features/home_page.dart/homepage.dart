@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 30),
                   FilteredMenuSection(),
                   const SizedBox(height: 30),
-                  PreviewCardDeck(),
+                  const PreviewCardDeck(),
                   const SizedBox(height: 20),
                   const FilteredIndicator(),
                   const SizedBox(height: 20),

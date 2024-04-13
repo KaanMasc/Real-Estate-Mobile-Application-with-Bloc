@@ -1,4 +1,4 @@
-import 'package:api/product/model/ad_property_model.dart';
+import 'package:api/features/detail_page/widgets/ad_title_description_text.dart';
 import 'package:api/features/detail_page/widgets/atomic/property_location_card.dart';
 import 'package:api/features/home_page.dart/widgets/atomic/direct_to_detailpage_button.dart';
 import 'package:api/features/detail_page/widgets/atomic/location_information_cards.dart';
@@ -14,11 +14,11 @@ import 'widgets/general/propert_information_box_listview.dart';
 class AdDetailPage extends StatelessWidget {
   const AdDetailPage({
     Key? key,
-    required this.adPropertyModel,
+    required this.listingsModel,
   }) : super(key: key);
 
   final String label = 'Book Now';
-  final NewListingModel adPropertyModel;
+  final ListingsModel listingsModel;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,7 @@ class AdDetailPage extends StatelessWidget {
             floating: false,
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(adPropertyModel.adDescription?.title ?? ''),
-              background: _buildImagePageView(adPropertyModel),
+              background: _buildImagePageView(listingsModel),
             ),
           ),
           SliverList(
@@ -44,9 +43,17 @@ class AdDetailPage extends StatelessWidget {
                     children: [
                       Text('ABOUT', style: Theme.of(context).textTheme.titleLarge),
                       const SizedBox(height: 20),
-                      PropertyInformationListView(property: adPropertyModel),
+                      AdTitleDescription(
+                        title: listingsModel.adDescription?.title ?? '',
+                        description: listingsModel.adDescription?.description ?? '',
+                      ),
                       const SizedBox(height: 20),
-                      const PropertyOwnerCard(),
+                      PropertyInformationListView(property: listingsModel),
+                      const SizedBox(height: 20),
+                      PropertyOwnerCard(
+                        fulName: listingsModel.contactInformation?.fulName ?? '',
+                        imagePath: listingsModel.contactInformation?.profilePicturePath ?? '',
+                      ),
                       const SizedBox(height: 20),
                       const LocationInformationCards(),
                       const SizedBox(height: 20),
@@ -56,10 +63,15 @@ class AdDetailPage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              adPropertyModel.propertyInformation?.price ?? '',
-                              style: Theme.of(context).textTheme.titleLarge,
+                            Spacer(),
+                            OutlinedButton(
+                              onPressed: null,
+                              child: Text(
+                                '${listingsModel.propertyInformation?.price ?? ''} \$',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
                             ),
+                            Spacer(),
                             ProjectCommonButton(
                               label: label,
                               backgroundColor: ProjectColors.black.color,
@@ -80,11 +92,11 @@ class AdDetailPage extends StatelessWidget {
     );
   }
 
-  PageView _buildImagePageView(NewListingModel newListingModel) {
+  PageView _buildImagePageView(ListingsModel newListingModel) {
     return PageView.builder(
-      itemCount: newListingModel.images.length,
+      itemCount: newListingModel.images?.length,
       itemBuilder: (context, index) {
-        final imageUrl = newListingModel.images[index];
+        final imageUrl = newListingModel.images?[index];
         return _buildImage(imageUrl);
       },
     );

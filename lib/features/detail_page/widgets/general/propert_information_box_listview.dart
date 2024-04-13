@@ -2,10 +2,9 @@ import 'package:api/features/detail_page/widgets/atomic/property_information_box
 import 'package:api/product/model/new_listing_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../product/model/ad_property_model.dart';
 
 class PropertyInformationListView extends StatelessWidget {
-  final NewListingModel property;
+  final ListingsModel property;
 
   const PropertyInformationListView({Key? key, required this.property})
       : super(key: key);

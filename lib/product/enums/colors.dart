@@ -10,7 +10,9 @@ enum ProjectColors {
   teaGreen,
   errorColor,
   orange,
-  pagecolor
+  pagecolor,
+  lightpurple,
+  purple,
 }
 
 extension ColorExtension on ProjectColors {
@@ -36,6 +38,10 @@ extension ColorExtension on ProjectColors {
         return const Color(0xC4FF9900);
       case ProjectColors.pagecolor:
         return const Color(0xFFE5E5E5);
+        case ProjectColors.purple:
+        return const Color(0xFF381E72);
+        case ProjectColors.lightpurple:
+        return const Color(0xFF4F378B);
     }
   }
 }

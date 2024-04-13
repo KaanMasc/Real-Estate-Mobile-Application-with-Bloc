@@ -5,8 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
 
 abstract class IPropertyAdRepository {
-  Future<List<NewListingModel>> fetchPropertyForSale();
-
   Future<List<dynamic>> fetchProperties(int type);
   Future<void> postListingToFirestore({
     required String title,
@@ -22,7 +20,6 @@ abstract class IPropertyAdRepository {
     required String sqft,
   });
 
-  Future<void> deleteListingFromFirestore(String docId);
 }
 
 class PropertyAdRepository extends IPropertyAdRepository {
@@ -34,53 +31,25 @@ class PropertyAdRepository extends IPropertyAdRepository {
         case 1:
           querySnapshot = await FirebaseFirestore.instance.collection('propertyAd').get();
           return querySnapshot.docs
-              .map((doc) => NewListingModel.fromJson(doc.data() as Map<String, dynamic>))
+              .map((doc) => ListingsModel.fromJson(doc.data() as Map<String, dynamic>))
               .toList();
         case 2:
-          querySnapshot = await FirebaseFirestore.instance.collection('propertyAdRent').get();
-          return querySnapshot.docs;
+          querySnapshot = await FirebaseFirestore.instance.collection('propertyAdForRent').get();
+          return querySnapshot.docs
+              .map((doc) => ListingsModel.fromJson(doc.data() as Map<String, dynamic>))
+              .toList();
+
         case 3:
-          querySnapshot = await FirebaseFirestore.instance.collection('roomProperty').get();
-          return querySnapshot.docs;
+          querySnapshot = await FirebaseFirestore.instance.collection('roomAdForRent').get();
+          return querySnapshot.docs
+              .map((doc) => ListingsModel.fromJson(doc.data() as Map<String, dynamic>))
+              .toList();
+
         default:
           throw 'Invalid property type.';
       }
     } catch (error) {
       throw 'There is an issue fetching properties. Please try again later.';
-    }
-  }
-
-  @override
-  Future<List<NewListingModel>> fetchPropertyForSale() async {
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('propertyAd').get();
-      return querySnapshot.docs
-          .map((doc) => NewListingModel.fromJson(doc.data() as Map<String, dynamic>))
-          .toList();
-    } catch (error) {
-      throw 'There is an issue fetching properties for sale. Please try again later.';
-    }
-  }
-
-  @override
-  Future<List<DocumentSnapshot>> fetchPropertyForRent() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('propertyAdRent').get();
-      return querySnapshot.docs;
-    } catch (error) {
-      throw 'There is an issue fetching properties for rent. Please try again later.';
-    }
-  }
-
-  @override
-  Future<List<DocumentSnapshot>> fetchRoomProperties() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('roomProperty').get();
-      return querySnapshot.docs;
-    } catch (error) {
-      throw 'There is an issue fetching room properties. Please try again later.';
     }
   }
 
@@ -154,19 +123,6 @@ class PropertyAdRepository extends IPropertyAdRepository {
       await docRef.update({'images': imageUrls});
     } catch (e) {
       rethrow;
-    }
-  }
-
-  @override
-  Future<void> deleteListingFromFirestore(String docId) async {
-    try {
-      String collectionName = '';
-      CollectionReference collectionReference =
-          FirebaseFirestore.instance.collection(collectionName);
-
-      await collectionReference.doc(docId).delete();
-    } catch (e) {
-      throw 'There is an issue. Please try again later.';
     }
   }
 }

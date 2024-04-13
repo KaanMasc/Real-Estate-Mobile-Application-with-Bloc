@@ -1,6 +1,6 @@
 import 'package:api/features/aPostAdPAge/bloc/post_ad_bloc.dart';
-import 'package:api/features/authentication/sign_in/sign_in_page.dart';
-import 'package:api/features/main_page/main_page.dart';
+import 'package:api/features/all_ads/all_property_ad_page.dart';
+import 'package:api/features/home_page.dart/homepage.dart';
 import 'package:api/features/onboarding/on_boarding_view.dart';
 import 'package:api/features/aPostAdPAge/listing_provider.dart';
 import 'package:api/features/authentication/register/cubit/register_cubit.dart';
@@ -23,6 +23,7 @@ Future<void> main() async {
     ),
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.isFirstTime});
   final bool isFirstTime;
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
-          home: isFirstTime ? const OnBoardingView() : const SignInPage(),
+          home: isFirstTime ? const OnBoardingView() : HomePage(),
           theme: ThemeData(useMaterial3: true),
         ),
       ),

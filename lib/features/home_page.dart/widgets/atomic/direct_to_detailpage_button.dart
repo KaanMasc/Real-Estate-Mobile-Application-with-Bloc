@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:api/product/utility/app_sizes.dart';
 import 'package:flutter/material.dart';
 
 class ProjectCommonButton extends StatelessWidget {
@@ -17,8 +18,8 @@ class ProjectCommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
-      width: 200,
+      height: AppSizes.screenHeight/15,
+      width: AppSizes.screenWidth/2,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

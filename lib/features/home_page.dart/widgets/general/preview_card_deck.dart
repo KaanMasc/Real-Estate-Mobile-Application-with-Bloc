@@ -44,13 +44,13 @@ class _PreviewCardDeckState extends State<PreviewCardDeck> {
               itemBuilder: (BuildContext context, int index) {
                 final propertyAd = propertyAds[index];
                 return PropertyAdCard(
-                  adtitle: propertyAd.adDescription.title,
+                  adtitle: propertyAd.adDescription.title ?? '',
                   imagePath: propertyAd.images[0],
                   onpressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AdDetailPage(adPropertyModel: propertyAd),
+                        builder: (context) => AdDetailPage(listingsModel: propertyAd),
                       ),
                     );
                   },

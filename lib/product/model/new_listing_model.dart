@@ -1,81 +1,75 @@
+// To parse this JSON data, do
+//
+//     final listingsModel = listingsModelFromJson(jsonString);
+
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-NewListingModel newListingModelFromJson(String str) => NewListingModel.fromJson(json.decode(str));
+import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart'
+    as firestore;
 
-String newListingModelToJson(NewListingModel data) => json.encode(data.toJson());
+ListingsModel listingsModelFromJson(String str) => ListingsModel.fromJson(json.decode(str));
 
-class NewListingModel {
-  final AdDescription adDescription;
-  final String categoryId;
-  final List<String> images;
-  final List<GeoPoint> geopoint;
-  final PropertyInformation propertyInformation;
+String listingsModelToJson(ListingsModel data) => json.encode(data.toJson());
 
-  NewListingModel({
-    required this.adDescription,
-    required this.categoryId,
-    required this.images,
-    required this.geopoint,
-    required this.propertyInformation,
+class ListingsModel {
+  final AdDescription? adDescription;
+  final String? categoryId;
+  final ContactInformation? contactInformation;
+  final List<dynamic>? images;
+  final List<String>? locationGeopoint;
+  final PropertyInformation? propertyInformation;
+
+  ListingsModel({
+    this.adDescription,
+    this.categoryId,
+    this.contactInformation,
+    this.images,
+    this.locationGeopoint,
+    this.propertyInformation,
   });
 
-  factory NewListingModel.fromDocumentSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+  factory ListingsModel.fromJson(Map<String, dynamic> json) => ListingsModel(
+        adDescription:
+            json["adDescription"] == null ? null : AdDescription.fromJson(json["adDescription"]),
+        categoryId: json["categoryID"],
+        contactInformation: json["contactInformation"] == null
+            ? null
+            : ContactInformation.fromJson(json["contactInformation"]),
+        images: json["images"] == null ? [] : List<dynamic>.from(json["images"]!.map((x) => x)),
+        locationGeopoint: json["locationGeopoint"] == null
+            ? []
+            : [
+                (json["locationGeopoint"] as firestore.GeoPoint).latitude.toString(),
+                (json["locationGeopoint"] as firestore.GeoPoint).longitude.toString()
+              ],
+        propertyInformation: json["propertyInformation"] == null
+            ? null
+            : PropertyInformation.fromJson(json["propertyInformation"]),
+      );
 
-    if (data == null) {
-      throw Exception('Document snapshot is null');
-    }
-
-    return NewListingModel(
-      adDescription: AdDescription.fromJson(data['adDescription']),
-      categoryId: data['categoryId'] ?? '',
-      images: List<String>.from(data['images'] ?? []),
-      geopoint: (data['geopoint'] as List<dynamic>).map((geo) {
-        return geo is GeoPoint
-            ? geo
-            : GeoPoint((geo as Map<String, dynamic>)['latitude'] as double,
-                (geo as Map<String, dynamic>)['longitude'] as double);
-      }).toList(),
-      propertyInformation: PropertyInformation.fromJson(data['propertyInformation']),
-    );
-  }
-
-  factory NewListingModel.fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      throw const FormatException("Json data is null");
-    }
-    return NewListingModel(
-      adDescription: AdDescription.fromJson(json["adDescription"]),
-      categoryId: json["categoryID"] ?? '', // Varsayılan olarak boş bir dize atandı
-      images: List<String>.from(json["images"]), // String listesi olarak alınması gerekiyor
-      geopoint:
-          json["Geopoint"] != null ? (json["Geopoint"] as List<dynamic>).cast<GeoPoint>() : [],
-      propertyInformation: PropertyInformation.fromJson(json["propertyInformation"]),
-    );
-  }
-  Map<String, dynamic> toJson() {
-    return {
-      'adDescription': adDescription.toJson(),
-      'categoryId': categoryId,
-      'images': images,
-      'propertyInformation': propertyInformation.toJson(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "adDescription": adDescription?.toJson(),
+        "categoryID": categoryId,
+        "contactInformation": contactInformation?.toJson(),
+        "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+        "locationGeopoint":
+            locationGeopoint == null ? [] : List<dynamic>.from(locationGeopoint!.map((x) => x)),
+        "propertyInformation": propertyInformation?.toJson(),
+      };
 }
 
 class AdDescription {
-  final String description;
-  final String title;
+  final String? description;
+  final String? title;
 
   AdDescription({
-    required this.description,
-    required this.title,
+    this.description,
+    this.title,
   });
 
   factory AdDescription.fromJson(Map<String, dynamic> json) => AdDescription(
-        description: json["description"] != null ? json["description"] as String : '',
-        title: json["title"] != null ? json["title"] as String : 'Your Perfect Home',
+        description: json["description"],
+        title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -84,38 +78,66 @@ class AdDescription {
       };
 }
 
-class PropertyInformation {
-  final String price;
-  final String balconyCount;
-  final String bathroomCount;
-  final String bedroomCount;
-  final String constructionYear;
-  final String sqft;
+class ContactInformation {
+  final String? fulName;
+  final String? profilePicturePath;
 
-  PropertyInformation({
-    required this.price,
-    required this.balconyCount,
-    required this.bathroomCount,
-    required this.bedroomCount,
-    required this.constructionYear,
-    required this.sqft,
+  ContactInformation({
+    this.fulName,
+    this.profilePicturePath,
   });
 
-  factory PropertyInformation.fromJson(Map<String, dynamic> json) => PropertyInformation(
-        price: json["price"],
-        balconyCount: json["balconyCount"],
-        bathroomCount: json["bathroomCount"],
-        bedroomCount: json["bedroomCount"],
-        constructionYear: json["constructionYear"],
-        sqft: json["sqft"] as String? ?? 'unknown',
+  factory ContactInformation.fromJson(Map<String, dynamic> json) => ContactInformation(
+        fulName: json["fulName"],
+        profilePicturePath: json["profilePicturePath"],
       );
 
   Map<String, dynamic> toJson() => {
-        "price": price,
+        "fulName": fulName,
+        "profilePicturePath": profilePicturePath,
+      };
+}
+
+class PropertyInformation {
+  final String? balconyCount;
+  final String? bathroomCount;
+  final String? bedroomCount;
+  final String? city;
+  final String? constructionYear;
+  final String? country;
+  final String? price;
+  final String? sqft;
+
+  PropertyInformation({
+    this.balconyCount,
+    this.bathroomCount,
+    this.bedroomCount,
+    this.city,
+    this.constructionYear,
+    this.country,
+    this.price,
+    this.sqft,
+  });
+
+  factory PropertyInformation.fromJson(Map<String, dynamic> json) => PropertyInformation(
+        balconyCount: json["balconyCount"],
+        bathroomCount: json["bathroomCount"],
+        bedroomCount: json["bedroomCount"],
+        city: json["city"],
+        constructionYear: json["constructionYear"],
+        country: json["country"],
+        price: json["price"],
+        sqft: json["sqft"],
+      );
+
+  Map<String, dynamic> toJson() => {
         "balconyCount": balconyCount,
         "bathroomCount": bathroomCount,
         "bedroomCount": bedroomCount,
+        "city": city,
         "constructionYear": constructionYear,
+        "country": country,
+        "price": price,
         "sqft": sqft,
       };
 }
