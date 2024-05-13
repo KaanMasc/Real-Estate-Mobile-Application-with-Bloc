@@ -1,18 +1,21 @@
-# api
+Real Estate App
+This project is a real estate application where users can browse and publish listings for sale or rent. It utilizes the MVVM (Model-View-ViewModel) architectural pattern and emphasizes object-oriented design principles.
 
-A new Flutter project.
+Features
+Authentication: Users can log in or sign up using their email address via Firebase Authentication.
 
-## Getting Started
+Onboarding: If the user is not logged in, they are directed to the splash view page, which redirects them to either the login page or the homepage.
 
-This project is a starting point for a Flutter application.
+Listing Creation: Users can create listings for sale or rent. The creation process is divided into multiple steps, with different form pages displayed based on the type of listing selected in the first step. State management for the listing creation process is handled using the BLoC (Business Logic Component) pattern.
 
-A few resources to get you started if this is your first Flutter project:
+Data Management: Firebase Firestore is used as the backend service for storing listing data. User information is stored in Firestore as well.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Profile Management: Logged-in users can view their profile information on the profile page. They can also edit their information, which is updated in the backend upon submission.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# realestate
-# Real-Estate-Mobile-Application-with-Bloc
+
+Technologies Used
+Flutter: The mobile application framework used for building the app.
+Firebase: Backend services are provided by Firebase, including Firebase Authentication and Firestore.
+Provider & Cubit: State management is handled using Provider for general state management and Cubit for managing authentication state.
+BLoC Pattern: Used for state management in the listing creation process.
+Mixin: Mixins are utilized throughout the project to reduce code complexity and improve maintainability.
